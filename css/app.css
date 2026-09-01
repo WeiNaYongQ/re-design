@@ -152,18 +152,35 @@
   border-color: var(--mint);
 }
 
-/* --- 03 · Layout --- */
-.app-grid {
+/* --- 03 · Layout - Bento Grid (mobile-first) --- */
+.bento-grid {
   display: grid;
-  grid-template-columns: 1.2fr 0.8fr;
-  gap: 2rem;
-  padding: 2.5rem 0 3.5rem;
+  grid-template-columns: 1fr;
+  gap: 1.2rem;
+  padding: 1.5rem 0 2.5rem;
   align-items: start;
 }
 
-.side {
+@media (min-width: 768px) {
+  .bento-grid {
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: 1.8rem;
+    padding: 2rem 0 3rem;
+  }
+}
+
+.bento-col {
   display: grid;
-  gap: 1.8rem;
+  gap: 1.2rem;
+  align-content: start;
+}
+
+.habits-col {
+  /* Habits column takes full width on mobile */
+}
+
+.widgets-col {
+  /* Widgets stack on mobile */
 }
 
 .panel {
@@ -171,8 +188,14 @@
   border: var(--line);
   border-radius: var(--r-card);
   box-shadow: none;
-  padding: 1.8rem;
+  padding: 1.4rem;
   position: relative;
+}
+
+@media (min-width: 768px) {
+  .panel {
+    padding: 1.8rem;
+  }
 }
 
 .panel h2 {
@@ -486,7 +509,11 @@
   from { transform: scale(0.9); opacity: 0; }
 }
 
-/* --- 07 · Spotlight --- */
+/* --- 07 · Spotlight Widget (replaces old spotlight) --- */
+.spotlight-widget {
+  /* Inherits panel styles */
+}
+
 .spot-card {
   border: var(--line);
   border-radius: var(--r-sm);
@@ -495,7 +522,7 @@
   display: grid;
   gap: 0.7rem;
   text-align: center;
-  min-height: 150px;
+  min-height: 140px;
   align-content: center;
 }
 
@@ -529,7 +556,50 @@
   margin-top: 1rem;
 }
 
-/* --- 08 · Buttons --- */
+/* --- 08 · Week Stats Widget (replaces old heatmap panel) --- */
+.week-stats {
+  /* Inherits panel styles */
+}
+
+.week-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.7rem;
+  margin-bottom: 1rem;
+}
+
+.mini-stat {
+  display: grid;
+  place-items: center;
+  text-align: center;
+  padding: 0.9rem 0.5rem;
+  background: rgba(52, 213, 154, 0.06);
+  border: var(--line);
+  border-radius: var(--r-sm);
+}
+
+.mini-stat-value {
+  font-family: var(--display);
+  font-weight: 800;
+  font-size: 1.5rem;
+  color: var(--white);
+}
+
+.mini-stat-label {
+  font-family: var(--mono);
+  font-size: 0.55rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--gray);
+  margin-top: 0.3rem;
+}
+
+.report-btn {
+  width: 100%;
+  border-radius: var(--r-pill);
+}
+
+/* --- 08a · Buttons (was 08, now after widgets) --- */
 .btn {
   font-family: var(--sans);
   font-weight: 600;
@@ -570,36 +640,40 @@
   border-color: #2BC48E;
 }
 
-/* --- 09 · Timer --- */
+/* --- 09 · Timer Orb (replaces old timer-ring) --- */
 .timer-body {
   display: grid;
   justify-items: center;
   gap: 1rem;
 }
 
-.timer-ring-wrap {
+.timer-orb-wrap {
   position: relative;
-  width: 170px;
-  height: 170px;
+  width: 200px;
+  height: 200px;
 }
 
-.timer-ring {
+.timer-orb {
   transform: rotate(-90deg);
 }
 
-.timer-ring circle {
-  fill: none;
-  stroke-width: 7;
-  stroke-linecap: round;
+.timer-orb .orb-bg {
+  fill: url(#orbGrad);
 }
 
-.timer-ring .bg {
-  stroke: var(--ink-12);
-}
-
-.timer-ring .fg {
+.timer-orb .orb-ring {
   stroke: var(--mint);
-  stroke-dasharray: 339.3;
+  stroke-width: 3;
+  opacity: 0.3;
+}
+
+.timer-orb .orb-fg {
+  stroke: var(--mint);
+  stroke-width: 8;
+  fill: none;
+  stroke-linecap: round;
+  stroke-dasharray: 439.8; /* 2 * PI * 70 */
+  stroke-dashoffset: 439.8;
   transition: stroke-dashoffset 0.9s linear;
 }
 
@@ -610,7 +684,7 @@
   place-items: center;
   font-family: var(--mono);
   font-weight: 700;
-  font-size: 2rem;
+  font-size: 2.2rem;
   color: var(--white);
 }
 
@@ -621,10 +695,10 @@
 
 .preset {
   font-family: var(--mono);
-  font-size: 0.72rem;
+  font-size: 0.85rem;
   border: var(--line);
   border-radius: var(--r-pill);
-  padding: 0.35rem 0.85rem;
+  padding: 0.5rem 1rem;
   background: transparent;
   color: var(--gray);
   transition: background 0.2s, color 0.2s, border-color 0.2s;

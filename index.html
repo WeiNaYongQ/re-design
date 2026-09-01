@@ -65,71 +65,76 @@
 
   <main>
     <!-- ══════════ THE APP ══════════ -->
-    <section class="container app-grid" id="app">
+    <section class="container bento-grid" id="app">
 
-      <section class="panel today">
-        <div class="today-head">
-          <div>
-            <h1>Today</h1>
-            <p class="today-date" id="todayDate"></p>
+      <!-- ===== LEFT COLUMN: Habits + Brain Dump ===== -->
+      <section class="bento-col habits-col">
+        
+        <section class="panel today" id="todayPanel">
+          <div class="today-head">
+            <div>
+              <h1>Today</h1>
+              <p class="today-date" id="todayDate"></p>
+            </div>
+            <div class="ring-wrap" title="today's progress">
+              <svg class="ring" viewBox="0 0 76 76">
+                <circle class="bg" cx="38" cy="38" r="30"/>
+                <circle class="fg" id="ringFg" cx="38" cy="38" r="30"/>
+              </svg>
+              <span class="ring-label" id="ringLabel">0/0</span>
+            </div>
           </div>
-          <div class="ring-wrap" title="today's progress">
-            <svg class="ring" viewBox="0 0 76 76">
-              <circle class="bg" cx="38" cy="38" r="30"/>
-              <circle class="fg" id="ringFg" cx="38" cy="38" r="30"/>
-            </svg>
-            <span class="ring-label" id="ringLabel">0/0</span>
+
+          <div class="battery">
+            <span class="battery-label">⚡ Energy check-in</span>
+            <div class="battery-cells" id="batteryCells">
+              <button class="bcell" aria-label="energy 1 of 5"></button>
+              <button class="bcell" aria-label="energy 2 of 5"></button>
+              <button class="bcell" aria-label="energy 3 of 5"></button>
+              <button class="bcell" aria-label="energy 4 of 5"></button>
+              <button class="bcell" aria-label="energy 5 of 5"></button>
+            </div>
+            <span class="battery-note" id="batteryNote"></span>
           </div>
-        </div>
 
-        <div class="battery">
-          <span class="battery-label">⚡ Energy check-in</span>
-          <div class="battery-cells" id="batteryCells">
-            <button class="bcell" aria-label="energy 1 of 5"></button>
-            <button class="bcell" aria-label="energy 2 of 5"></button>
-            <button class="bcell" aria-label="energy 3 of 5"></button>
-            <button class="bcell" aria-label="energy 4 of 5"></button>
-            <button class="bcell" aria-label="energy 5 of 5"></button>
+          <ul class="habit-list" id="habitList"></ul>
+          <button id="addBtn" class="add-row">+ add a tiny habit</button>
+          <button id="archiveBtn" class="archive-toggle" hidden>🗄 archive (0)</button>
+          <div class="brain-dump">
+            <label for="brainDump" class="bd-label">🧠 clear the RAM (brain dump)</label>
+            <textarea id="brainDump" rows="3" placeholder="intrusive thoughts, to-dos, random ideas... they're safe here."></textarea>
           </div>
-          <span class="battery-note" id="batteryNote"></span>
-        </div>
-
-        <ul class="habit-list" id="habitList"></ul>
-        <button id="addBtn" class="add-row">+ add a tiny habit</button>
-        <button id="archiveBtn" class="archive-toggle" hidden>🗄 archive (0)</button>
-        <div class="brain-dump">
-          <label for="brainDump" class="bd-label">🧠 clear the RAM (brain dump)</label>
-          <textarea id="brainDump" rows="3" placeholder="intrusive thoughts, to-dos, random ideas... they're safe here."></textarea>
-        </div>
-        <div id="archiveTray" class="archive-tray" hidden></div>
-        <div id="doneBanner" class="done-banner" hidden></div>
-      </section>
-
-      <aside class="side">
-
-        <section class="panel spotlight">
-          <h2>🎯 Just one thing <span class="chip">anti-overwhelm</span></h2>
-          <div class="spot-card" id="spotCard"></div>
-          <div class="spot-actions">
-            <button class="btn btn-primary" id="spotDone">Done ✓</button>
-            <button class="btn" id="spotShuffle">Shuffle 🔀</button>
-          </div>
+          <div id="archiveTray" class="archive-tray" hidden></div>
+          <div id="doneBanner" class="done-banner" hidden></div>
         </section>
 
-        <section class="panel timer" id="focus">
+      </section>
+
+      <!-- ===== RIGHT COLUMN: Timer Orb + Stats Widgets ===== -->
+      <section class="bento-col widgets-col">
+
+        <!-- Timer Orb - Centerpiece -->
+        <section class="panel timer-orb" id="focus">
           <h2>⏳ Focus timer <span class="chip">time blindness fix</span></h2>
           <div class="timer-body">
-            <div class="timer-ring-wrap">
-              <svg class="timer-ring" viewBox="0 0 120 120">
-                <circle class="bg" cx="60" cy="60" r="54"/>
-                <circle class="fg" id="tRing" cx="60" cy="60" r="54"/>
+            <div class="timer-orb-wrap">
+              <svg class="timer-orb" viewBox="0 0 200 200">
+                <defs>
+                  <radialGradient id="orbGrad" cx="50%" cy="50%" r="50%">
+                    <stop offset="0%" style="stop-color:var(--mint);stop-opacity:0.3"/>
+                    <stop offset="100%" style="stop-color:var(--mint);stop-opacity:0.05"/>
+                  </radialGradient>
+                </defs>
+                <circle class="orb-bg" cx="100" cy="100" r="90" fill="url(#orbGrad)"/>
+                <circle class="orb-ring" cx="100" cy="100" r="80" stroke="var(--mint)" stroke-width="3" fill="none" opacity="0.3"/>
+                <circle class="orb-fg" id="tOrb" cx="100" cy="100" r="70" stroke="var(--mint)" stroke-width="8" fill="none" stroke-linecap="round"/>
               </svg>
               <span class="timer-digits" id="tDigits">15:00</span>
             </div>
             <div class="timer-presets">
-              <button class="preset" data-min="10">10 min</button>
-              <button class="preset active" data-min="15">15 min</button>
-              <button class="preset" data-min="25">25 min</button>
+              <button class="preset" data-min="10">10</button>
+              <button class="preset active" data-min="15">15</button>
+              <button class="preset" data-min="25">25</button>
             </div>
             <div class="timer-controls">
               <button class="btn btn-primary" id="tStart">Start</button>
@@ -139,13 +144,37 @@
           </div>
         </section>
 
-        <section class="panel week">
-          <h2>🗓️ Last 7 days</h2>
-          <div class="heat" id="heat"></div>
-          <a class="btn mini report-btn" href="stats.html">📊 weekly report</a>
+        <!-- Spotlight Widget -->
+        <section class="panel spotlight-widget">
+          <h2>🎯 Just one thing <span class="chip">anti-overwhelm</span></h2>
+          <div class="spot-card" id="spotCard"></div>
+          <div class="spot-actions">
+            <button class="btn btn-primary" id="spotDone">Done ✓</button>
+            <button class="btn" id="spotShuffle">Shuffle 🔀</button>
+          </div>
         </section>
 
-      </aside>
+        <!-- Week Stats Widget -->
+        <section class="panel week-stats">
+          <h2>📊 This week</h2>
+          <div class="week-stats-grid">
+            <div class="mini-stat">
+              <span class="mini-stat-value" id="weekChecks">0</span>
+              <span class="mini-stat-label">checks</span>
+            </div>
+            <div class="mini-stat">
+              <span class="mini-stat-value" id="weekStreak">0</span>
+              <span class="mini-stat-label">best streak</span>
+            </div>
+            <div class="mini-stat">
+              <span class="mini-stat-value" id="weekPct">0%</span>
+              <span class="mini-stat-label">complete</span>
+            </div>
+          </div>
+          <a class="btn mini report-btn" href="stats.html">📊 full report</a>
+        </section>
+
+      </section>
     </section>
 
     <!-- ══════════ WHY LOOP ══════════ -->

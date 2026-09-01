@@ -60,7 +60,17 @@ const TimerPanel = (() => {
     const m = String(Math.floor(left / 60)).padStart(2,'0');
     const s = String(left % 60).padStart(2,'0');
     document.getElementById('tDigits').textContent = `${m}:${s}`;
-    document.getElementById('tRing').style.strokeDashoffset = C * (1 - left / dur);
+    // Support both old timer-ring and new timer-orb
+    const orbEl = document.getElementById('tOrb');
+    const ringEl = document.getElementById('tRing');
+    if (orbEl) {
+      const C_orb = 439.8; // 2 * PI * 70
+      orbEl.style.strokeDasharray = String(C_orb);
+      orbEl.style.strokeDashoffset = String(C_orb * (left / dur));
+    }
+    if (ringEl) {
+      ringEl.style.strokeDashoffset = C * (1 - left / dur);
+    }
   }
 
   function rotateWhisper(){
