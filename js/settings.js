@@ -17,16 +17,18 @@
   const _burst = burst;
   burst = function(...args){ if(state.calm) return; _burst(...args); };
 
-  /* --- 🌙 night mode --- */
+  /* --- 🌙 night/day mode toggle --- */
   const themeBtn = document.getElementById('themeBtn');
   const applyTheme = () => {
-    const night = state.theme === 'night';
-    document.documentElement.setAttribute('data-theme', night ? 'night' : 'day');
-    themeBtn.textContent = night ? '☀️' : '🌙';
-    themeBtn.title = night ? 'switch to day mode' : 'switch to night mode';
+    // Default to 'day' if theme is undefined
+    const isNight = state.theme === 'night';
+    document.documentElement.setAttribute('data-theme', isNight ? 'night' : 'day');
+    themeBtn.textContent = isNight ? '☀️' : '🌙';
+    themeBtn.title = isNight ? 'switch to day mode' : 'switch to night mode';
   };
   themeBtn.addEventListener('click', () => {
-    state.theme = state.theme === 'night' ? 'day' : 'night';
+    // Toggle: if currently night, switch to day; otherwise switch to night
+    state.theme = (state.theme === 'night') ? 'day' : 'night';
     Store.save(state); applyTheme(); blip(520);
   });
   applyTheme();
