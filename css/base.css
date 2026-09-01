@@ -1,0 +1,151 @@
+/* ═══════════ css/base.css — NEON DESIGN SYSTEM BASE ═══════════ 
+   Dark, calm, premium, developer-first foundation */
+
+:root {
+  /* Core colors from theme.css */
+  --void: #000000;
+  --near-void: #111315;
+  --mint: #34D59A;
+  --pale-mint: #E4F1EB;
+  --white: #FFFFFF;
+  --gray: #94979E;
+  --gray-dim: rgba(148, 151, 158, 0.4);
+  
+  /* Legacy compatibility */
+  --paper: var(--void);
+  --card: var(--near-void);
+  --ink: var(--white);
+  --ink-60: rgba(255, 255, 255, 0.6);
+  --ink-12: rgba(255, 255, 255, 0.12);
+  --sun: var(--mint);
+  --coral: var(--mint);
+  --tint: var(--mint);
+  --sky: var(--mint);
+  --grape: #B084F0;
+  --pink: #FF8FC0;
+  
+  /* Borders and shadows */
+  --line: 1px solid rgba(255, 255, 255, 0.15);
+  --shadow: none;
+  --shadow-sm: none;
+  
+  /* Border radius */
+  --r: 4px;
+  --r-sm: 4px;
+  
+  /* Typography - Inter for UI, Geist Mono for numbers */
+  --display: 'Inter', system-ui, -apple-system, sans-serif;
+  --body: 'Inter', system-ui, -apple-system, sans-serif;
+  --mono: 'Geist Mono', 'Space Mono', monospace;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0 }
+html { scroll-behavior: smooth }
+
+body {
+  font-family: var(--body);
+  background: var(--void);
+  color: var(--white);
+  line-height: 1.55;
+  overflow-x: hidden;
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Subtle dot grid background */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-image: radial-gradient(rgba(255, 255, 255, 0.08) 1px, transparent 1px);
+  background-size: 28px 28px;
+  opacity: 0.03;
+}
+
+/* Minimal ambient glow */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(500px 300px at 5% -10%, rgba(52, 213, 154, 0.06), transparent 70%),
+    radial-gradient(400px 280px at 95% 10%, rgba(52, 213, 154, 0.04), transparent 70%);
+}
+
+img, svg { display: block; max-width: 100% }
+button, input, select { font: inherit; color: inherit }
+button { cursor: pointer; background: none; border: none }
+a { color: inherit; text-decoration: none }
+::selection { background: var(--mint); color: var(--void) }
+:focus-visible { outline: 2px solid var(--mint); outline-offset: 3px; border-radius: 3px }
+
+.container {
+  width: min(1100px, 92vw);
+  margin-inline: auto;
+  position: relative;
+  z-index: 2;
+}
+
+h1, h2, h3, .display {
+  font-family: var(--display);
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+}
+
+/* Floating ambient elements - minimal */
+.ambient {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.sticker {
+  position: absolute;
+  opacity: 0.4;
+  animation: float 8s ease-in-out infinite alternate;
+}
+
+.st1 { top: 17%; left: 3.5% }
+.st2 { top: 11%; right: 4.5%; animation-delay: -2s }
+.st3 { bottom: 27%; left: 5%; animation-delay: -4s }
+.st4 { bottom: 10%; right: 7%; animation-delay: -1s }
+.st5 { top: 46%; right: 2.5%; animation-delay: -3s }
+
+.big-ring {
+  position: absolute;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 50%;
+  opacity: 0.03;
+}
+
+.r-a { width: 520px; height: 520px; top: -180px; right: -160px }
+.r-b { width: 380px; height: 380px; bottom: -160px; left: -140px }
+
+@keyframes float {
+  from { transform: translateY(-8px) rotate(-4deg) }
+  to { transform: translateY(10px) rotate(5deg) }
+}
+
+.pill {
+  font-family: var(--mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.1em;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 999px;
+  padding: 0.15rem 0.6rem;
+  background: transparent;
+  color: var(--gray);
+  vertical-align: middle;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * { animation: none !important; transition: none !important }
+  html { scroll-behavior: auto }
+}

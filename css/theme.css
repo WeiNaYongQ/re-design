@@ -1,0 +1,224 @@
+/* ═══════════ css/theme.css — NEON DESIGN SYSTEM ═══════════
+   Dark, calm, premium, developer-first.
+   Colors: Black (#000000), Near-black (#111315), Mint (#34D59A), Pale mint (#E4F1EB)
+   Typography: Inter (UI), Geist Mono (numbers/stats)
+*/
+
+/* --- 00 · Core Design Tokens --- */
+:root {
+  /* Colors */
+  --void: #000000;
+  --near-void: #111315;
+  --mint: #34D59A;
+  --pale-mint: #E4F1EB;
+  --white: #FFFFFF;
+  --gray: #94979E;
+  --gray-dim: rgba(148, 151, 158, 0.4);
+  
+  /* Legacy color references (for compatibility) */
+  --paper: var(--void);
+  --card: var(--near-void);
+  --ink: var(--white);
+  --ink-60: rgba(255, 255, 255, 0.6);
+  --ink-12: rgba(255, 255, 255, 0.12);
+  --sun: var(--mint);
+  --coral: var(--mint);
+  --tint: var(--mint);
+  --sky: var(--mint);
+  --grape: #B084F0;
+  
+  /* Typography */
+  --sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --mono: 'Geist Mono', 'Space Mono', monospace;
+  
+  /* Shapes */
+  --r-pill: 9999px;
+  --r-card: 4px;
+  --r-sm: 4px;
+  --r: 4px;
+  
+  /* Shadows - minimal, flat design */
+  --shadow-sm: none;
+  --shadow: none;
+  --shadow-lg: none;
+  
+  /* Borders */
+  --line: 1px solid rgba(255, 255, 255, 0.15);
+  --line-dashed: 1px dashed rgba(255, 255, 255, 0.15);
+}
+
+/* --- 01 · Base Overrides --- */
+body {
+  background: var(--void);
+  color: var(--white);
+}
+
+body::before {
+  opacity: 0.03;
+}
+
+.ticker {
+  background: var(--near-void);
+  border-bottom: var(--line);
+}
+
+.ticker-track {
+  animation-duration: 60s;
+}
+
+.ambient .sticker {
+  opacity: 0.5;
+}
+
+/* --- 02 · Calm Mode --- */
+body.calm .ambient { display: none; }
+body.calm .ticker-track { animation: none; }
+body.calm .spark,
+body.calm .flame.hot,
+body.calm .spot-emoji { animation: none; }
+body.calm .rule:hover { transform: none; }
+body.calm .habit:hover { transform: none; box-shadow: var(--shadow-sm); }
+body.calm #calmBtn { background: var(--mint); color: var(--void); }
+
+/* --- 03 · Night/Dusk Theme Support --- */
+[data-theme="night"],
+[data-theme="dusk"] {
+  color-scheme: dark;
+}
+
+/* --- 04 · Dialog Styling --- */
+dialog {
+  color: var(--white);
+  background: var(--near-void);
+  border: var(--line);
+  border-radius: var(--r-card);
+  box-shadow: none;
+}
+
+dialog::backdrop {
+  background: rgba(0, 0, 0, 0.7);
+}
+
+#hName::placeholder {
+  color: var(--gray);
+}
+
+/* --- 05 · Form Elements --- */
+textarea {
+  font: inherit;
+  color: inherit;
+  background: var(--near-void);
+  border: var(--line);
+}
+
+textarea#hNote {
+  width: 100%;
+  border-radius: var(--r-sm);
+  padding: 0.7rem 0.9rem;
+  resize: vertical;
+}
+
+/* --- 06 · Buttons --- */
+.edit, .del {
+  width: 36px;
+  height: 36px;
+  flex: none;
+  border: var(--line);
+  border-radius: var(--r-sm);
+  background: var(--near-void);
+  font-size: 0.85rem;
+  opacity: 0;
+  transition: opacity 0.15s, background 0.15s;
+}
+
+.habit:hover .edit, .habit:focus-within .edit,
+.habit:hover .del, .habit:focus-within .del {
+  opacity: 1;
+}
+
+.edit:hover { background: var(--mint); color: var(--void); }
+.del:hover { background: #FF6157; color: var(--white); }
+
+@media (hover: none) {
+  .del, .edit { opacity: 1; }
+}
+
+.note-chip {
+  font-size: 0.9rem;
+  cursor: help;
+  flex: none;
+  color: var(--gray);
+}
+
+.archive-toggle {
+  margin-top: 0.8rem;
+  font-family: var(--mono);
+  font-size: 0.75rem;
+  border: var(--line-dashed);
+  border-radius: var(--r-pill);
+  padding: 0.4rem 1rem;
+  color: var(--gray);
+}
+
+.archive-toggle:hover {
+  background: rgba(176, 132, 240, 0.15);
+}
+
+.archive-tray {
+  margin-top: 0.8rem;
+  display: grid;
+  gap: 0.5rem;
+  border: var(--line-dashed);
+  border-radius: var(--r-sm);
+  padding: 0.9rem;
+  background: rgba(176, 132, 240, 0.08);
+}
+
+.arch-row {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+}
+
+.arch-name {
+  flex: 1;
+  font-size: 0.9rem;
+  opacity: 0.6;
+  text-decoration: line-through;
+}
+
+.arch-row .btn.mini {
+  box-shadow: none;
+  border: var(--line);
+}
+
+.report-btn {
+  margin-top: 1rem;
+  width: 100%;
+  border-radius: var(--r-pill);
+}
+
+/* --- 07 · Data Bar --- */
+.data-bar {
+  width: 100%;
+  display: flex;
+  gap: 0.7rem;
+  flex-wrap: wrap;
+  margin-top: 1.5rem;
+  padding-top: 1.2rem;
+  border-top: var(--line-dashed);
+}
+
+.btn.mini {
+  font-size: 0.75rem;
+  padding: 0.45rem 1rem;
+  background: var(--near-void);
+  color: var(--white);
+  border: var(--line);
+  border-radius: var(--r-pill);
+}
+
+.btn.mini.danger {
+  background: rgba(255, 97, 87, 0.15);
+  color: #FF6157;
+}

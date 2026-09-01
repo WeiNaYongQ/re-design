@@ -1,0 +1,221 @@
+/* ═══════════ css/site.css — NEON DESIGN SYSTEM ═══════════ 
+   House rules, CTA, footer, reveals */
+
+/* --- 01 · House Rules --- */
+.rules {
+  padding: 4.5rem 0 3.6rem;
+}
+
+.kicker {
+  display: inline-block;
+  font-family: var(--mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 999px;
+  padding: 0.35rem 0.85rem;
+  background: transparent;
+  color: var(--gray);
+  margin-bottom: 1.1rem;
+}
+
+.section-title {
+  font-size: clamp(2rem, 5vw, 3rem);
+  font-weight: 700;
+  margin-bottom: 2.2rem;
+  max-width: 18ch;
+  color: var(--white);
+}
+
+.section-title .u {
+  position: relative;
+  white-space: nowrap;
+}
+
+.section-title .u svg {
+  position: absolute;
+  left: 0;
+  bottom: -8px;
+  width: 100%;
+  height: 8px;
+}
+
+.rule {
+  display: grid;
+  grid-template-columns: 80px 1fr auto;
+  gap: 1.5rem;
+  align-items: center;
+  padding: 1.5rem 1rem;
+  border-top: var(--line);
+  transition: background 0.25s, transform 0.2s;
+}
+
+.rule:last-of-type {
+  border-bottom: var(--line);
+}
+
+.rule:hover {
+  background: rgba(52, 213, 154, 0.04);
+  transform: translateX(6px);
+}
+
+.rule-num {
+  font-family: var(--mono);
+  font-weight: 700;
+  font-size: 2rem;
+  color: var(--gray);
+  transition: color 0.25s;
+}
+
+.rule:hover .rule-num {
+  color: var(--mint);
+}
+
+.rule h3 {
+  font-size: 1.2rem;
+  margin-bottom: 0.25rem;
+  color: var(--white);
+  font-weight: 600;
+}
+
+.rule p {
+  color: var(--gray);
+  max-width: 55ch;
+  transition: color 0.25s;
+  line-height: 1.5;
+}
+
+.rule:hover p {
+  color: var(--white);
+}
+
+.rule-tag {
+  font-family: var(--mono);
+  font-size: 0.62rem;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  padding: 0.25rem 0.65rem;
+  border-radius: 999px;
+  background: transparent;
+  white-space: nowrap;
+  color: var(--gray);
+}
+
+/* --- 02 · CTA Band --- */
+.cta {
+  background: var(--near-void);
+  border-block: var(--line);
+  text-align: center;
+  padding: 4.2rem 0;
+  position: relative;
+  overflow: hidden;
+}
+
+.cta h2 {
+  font-size: clamp(1.8rem, 5vw, 3.2rem);
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+  color: var(--white);
+  line-height: 1.15;
+}
+
+.cta .btn {
+  font-size: 1rem;
+  padding: 0.75rem 1.6rem;
+}
+
+.cta .deco {
+  position: absolute;
+  font-size: 1.8rem;
+  font-family: var(--mono);
+  opacity: 0.3;
+  color: var(--mint);
+}
+
+.cta .d1 { top: 20%; left: 8%; transform: rotate(-12deg); }
+.cta .d2 { bottom: 18%; right: 10%; transform: rotate(8deg); }
+.cta .d3 { top: 26%; right: 20%; transform: rotate(-5deg); }
+
+/* --- 03 · Footer --- */
+footer {
+  background: var(--near-void);
+  color: var(--white);
+  padding: 2.2rem 0;
+  border-top: var(--line);
+}
+
+footer .container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.2rem 2rem;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.foot-logo {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--white);
+}
+
+.foot-logo .spark {
+  color: var(--mint);
+}
+
+footer .fine {
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  opacity: 0.6;
+  color: var(--gray);
+}
+
+/* --- 04 · Scroll Reveals --- */
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.6s ease, transform 0.6s cubic-bezier(0.2, 0.7, 0.3, 1);
+}
+
+.reveal.in {
+  opacity: 1;
+  transform: none;
+}
+
+/* --- 05 · Responsive --- */
+@media (max-width: 980px) {
+  .app-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .rule {
+    grid-template-columns: 55px 1fr;
+  }
+  
+  .rule-tag {
+    grid-column: 2;
+    justify-self: start;
+  }
+}
+
+@media (max-width: 640px) {
+  .topnav {
+    order: 3;
+    width: 100%;
+  }
+  
+  .today-head {
+    gap: 0.8rem;
+  }
+  
+  .heat-row {
+    grid-template-columns: 52px repeat(7, 1fr);
+  }
+  
+  .sticker {
+    display: none;
+  }
+  
+  .rules {
+    padding: 3.5rem 0 2.8rem;
+  }
+}

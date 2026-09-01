@@ -1,0 +1,99 @@
+/* ═══════════ css/mobile.css — phone-first fixes (v0.5) ═══════════ */
+
+/* 0 · text shouldn't inflate on its own; taps are intentional, not zoom requests */
+html{ -webkit-text-size-adjust:100%; text-size-adjust:100% }
+*{ touch-action:manipulation; -webkit-tap-highlight-color:transparent }
+
+/* 1 · real phones (≤ 480px): less clutter, BIGGER tap targets */
+@media (max-width: 480px){
+
+  .container{ width:94vw }
+
+  /* topbar + ticker */
+  .topbar .container{ gap:.6rem; padding:.6rem 0 }
+  .logo{ font-size:1.25rem }
+  .topnav{ gap:.9rem; font-size:.9rem }
+  .icon-btn{ width:42px; height:42px }
+  .half{ font-size:.64rem; gap:1.6rem }
+
+  /* panels */
+  .panel{ padding:1.1rem; border-radius:14px; box-shadow:5px 5px 0 var(--ink) }
+  .app-grid{ gap:1.1rem; padding:1.6rem 0 2.6rem }
+
+  /* today head */
+  .today-head{ gap:.8rem }
+  .today-head h1{ font-size:1.9rem }
+  .today-date{ font-size:.7rem }
+  .ring-wrap{ width:62px; height:62px }
+
+  /* energy check-in — cells were far too small to tap */
+  .battery{ gap:.5rem; padding:.7rem .8rem }
+  .bcell{ width:34px; height:22px }
+  .battery-note{ width:100% }
+
+  /* habit rows */
+  .habit{ padding:.65rem .7rem; gap:.65rem; box-shadow:3px 3px 0 var(--ink) }
+  .check{ width:40px; height:40px }
+  .habit-name{ font-size:.98rem }
+  .habit-sub{ font-size:.68rem }
+  .flame{ font-size:.7rem; padding:.15rem .45rem }
+  .del, .edit{ width:38px; height:38px; font-size:.9rem }
+  .note-chip{ font-size:.85rem }
+  .add-row{ padding:.8rem; font-size:.95rem }
+  .archive-tray{ padding:.6rem }
+
+  /* timer */
+  .timer-ring-wrap{ width:150px; height:150px }
+  .timer-digits{ font-size:1.7rem }
+  .preset{ padding:.45rem .9rem; font-size:.8rem }
+
+  /* heatmap */
+  .heat-row{ grid-template-columns:48px repeat(7, 1fr); gap:.3rem }
+  .heat-label{ font-size:.62rem }
+
+  /* composer */
+  dialog{ width:94vw; padding:1.2rem }
+  .emoji-opt{ width:42px; height:42px }
+  .color-opt{ width:36px; height:36px }
+
+  /* house rules + cta */
+  .rules{ padding:2.8rem 0 2.4rem }
+  .section-title{ font-size:1.9rem; margin-bottom:1.8rem }
+  .rule{ grid-template-columns:48px 1fr; gap:.6rem; padding:1.1rem .3rem }
+  .rule-num{ font-size:1.8rem }
+  .rule h3{ font-size:1.15rem }
+  .rule p{ font-size:.9rem }
+  .cta{ padding:3rem 0 }
+  .cta .deco{ display:none }
+
+  /* stats page */
+  .stats-wrap{ padding:1.6rem 0 2.6rem; gap:1.1rem }
+  .stats-head h1{ font-size:1.9rem }
+  .score-ring-wrap{ width:120px; height:120px }
+  #scorePct{ font-size:1.7rem }
+  .stat-boxes{ gap:.7rem }
+  .sbox{ padding:.7rem .5rem }
+  .sbox-num{ font-size:1.35rem }
+  .bars{ height:160px; gap:.6rem }
+  .stat-habit{ gap:.6rem; padding:.6rem .7rem }
+  .sh-name{ font-size:.92rem }
+  .dot{ width:14px; height:14px }
+  .energy-week{ gap:.8rem }
+
+  footer .container{ gap:.6rem }
+}
+
+/* 2 · mid-size phones get a gentler pass */
+@media (min-width: 481px) and (max-width: 640px){
+  .panel{ padding:1.3rem }
+  .bcell{ width:30px; height:20px }
+  .timer-ring-wrap{ width:164px; height:164px }
+}
+
+/* 3 · "desktop mode" on phones renders ~980px wide and shrinks it all.
+   We can't stop that — but bigger targets survive the shrink better. */
+@media (min-width: 900px){
+  .bcell{ width:30px; height:20px }
+  .del, .edit{ width:34px; height:34px }
+  .check{ width:40px; height:40px }
+}

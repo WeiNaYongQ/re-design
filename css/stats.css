@@ -1,0 +1,62 @@
+/* ═══════════ css/stats.css — the receipts page ═══════════ */
+
+.stats-main{ padding:2.4rem 0 3.4rem; display:grid; gap:1.6rem }
+.stats-head{ display:flex; align-items:end; gap:1rem; flex-wrap:wrap }
+.stats-head h1{ font-size:clamp(2.2rem, 5vw, 3.2rem); font-weight:800 }
+.range{ margin-left:auto; font-family:var(--mono); font-size:.8rem; color:var(--ink-60); letter-spacing:.08em; padding-bottom:.4rem }
+.topnav a.active::after{ width:100% }
+
+/* week ring */
+.report-grid{ display:grid; grid-template-columns:auto 1fr; gap:2rem; align-items:center }
+.big-ring-wrap{ position:relative; width:190px; height:190px }
+.big-ring{ transform:rotate(-90deg) }
+.big-ring circle{ fill:none; stroke-width:16; stroke-linecap:round }
+.big-ring .bg{ stroke:var(--ink-12) }
+.big-ring .fg{ stroke:var(--coral); stroke-dasharray:527.8; stroke-dashoffset:527.8; transition:stroke-dashoffset 1.2s cubic-bezier(.3,.7,.3,1) }
+.big-label{ position:absolute; inset:0; display:grid; place-items:center; font-family:var(--display); font-weight:800; font-size:2.6rem }
+
+.stat-boxes{ display:grid; grid-template-columns:repeat(3, 1fr); gap:.9rem }
+.stat-box{ border:2.5px solid var(--ink); border-radius:14px; padding:1rem .8rem; text-align:center; box-shadow:var(--shadow-sm); background:var(--sun) }
+.stat-box:nth-child(2){ background:var(--mint) }
+.stat-box:nth-child(3){ background:var(--sky) }
+.stat-value{ font-family:var(--display); font-weight:800; font-size:1.7rem }
+.stat-label{ font-family:var(--mono); font-size:.6rem; letter-spacing:.12em; text-transform:uppercase }
+
+/* animated bars */
+.bars{ display:flex; gap:1rem; align-items:end; height:200px; margin-top:2rem }
+.bar-col{ flex:1; height:100%; display:grid; justify-items:center; align-content:end; gap:.4rem }
+.bar{ width:100%; max-width:64px; height:0; border:2.5px solid var(--ink); border-radius:10px 10px 4px 4px; transition:height .9s cubic-bezier(.2,.8,.3,1) }
+.bar-count{ font-family:var(--mono); font-size:.75rem }
+.bar-day{ font-family:var(--mono); font-size:.7rem; color:var(--ink-60) }
+
+.quote-line{ margin-top:1.4rem; text-align:center; font-style:italic; color:var(--ink-60) }
+.report-actions{ display:flex; gap:.9rem; align-items:center; margin-top:1.2rem; flex-wrap:wrap }
+.share-hint{ font-size:.85rem; color:var(--ink-60); font-style:italic }
+
+/* leaderboard */
+.lb-row{ display:grid; grid-template-columns:minmax(120px, 1.3fr) auto auto auto; gap:1rem; align-items:center; padding:.75rem .3rem; border-top:2px solid var(--ink-12) }
+.lb-row:first-child{ border-top:none }
+.lb-name{ font-family:var(--display); font-weight:700 }
+.lb-cells{ display:flex; gap:4px }
+.lb-cells i{ width:16px; height:16px; border:2px solid var(--ink); border-radius:4px; background:var(--ink-12) }
+.lb-cells i.on{ background:var(--tint) }
+.lb-streak{ font-family:var(--mono); font-size:.8rem }
+.lb-pct{ font-family:var(--display); font-weight:800; font-size:1rem; border:2px solid var(--ink); border-radius:999px; padding:.15rem .6rem; background:var(--sun); min-width:58px; text-align:center }
+.empty{ font-style:italic; color:var(--ink-60); padding:.6rem .2rem }
+
+/* all-time tiles */
+.tiles{ display:grid; grid-template-columns:repeat(4, 1fr); gap:1rem }
+.tile{ border:2.5px solid var(--ink); border-radius:14px; padding:1.1rem .8rem; text-align:center; background:var(--card); box-shadow:var(--shadow-sm) }
+
+/* the report link on the board page (anchor needs block display) */
+.report-btn{ display:block; text-align:center }
+
+@media (max-width: 860px){
+  .report-grid{ grid-template-columns:1fr; justify-items:center }
+  .stat-boxes{ width:100% }
+  .tiles{ grid-template-columns:repeat(2, 1fr) }
+}
+@media (max-width: 560px){
+  .lb-cells{ display:none }
+  .bars{ gap:.5rem }
+}

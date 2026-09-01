@@ -1,0 +1,68 @@
+/* ═══════════ css/pro.css — Loop Pro UI (v0.6) ═══════════ */
+
+/* header button */
+.pro-btn{ font-family:var(--display); font-weight:700; font-size:.85rem; border:2.5px solid var(--ink); border-radius:999px; padding:.45rem .9rem; background:var(--grape); box-shadow:var(--shadow-sm); transition:transform .15s, box-shadow .15s }
+.pro-btn:hover{ transform:translate(-2px,-2px); box-shadow:5px 5px 0 var(--ink) }
+.pro-btn.is-pro{ background:var(--sun) }
+
+/* modal */
+.pro-price{ font-family:var(--mono); font-size:.75rem; border:2px solid var(--ink); border-radius:999px; padding:.15rem .6rem; background:var(--sun); margin-left:.5rem; vertical-align:middle }
+.pro-list{ list-style:none; display:grid; gap:.5rem; margin:1rem 0 }
+.pro-list li{ padding:.45rem .65rem; border:2px solid var(--ink); border-radius:10px; background:var(--paper); font-size:.92rem }
+.pro-key-row{ display:flex; gap:.6rem }
+#proKey{ flex:1; border:2.5px solid var(--ink); border-radius:10px; padding:.6rem .8rem; background:var(--paper); font-family:var(--mono) }
+.pro-note{ min-height:1.2em; font-size:.85rem; margin-top:.6rem; font-style:italic; color:var(--ink-60) }
+.theme-dot{ width:34px; height:34px; border-radius:50%; border:2.5px solid var(--ink); position:relative; transition:transform .12s }
+.theme-dot:hover{ transform:scale(1.12) }
+.theme-dot.pro-only::after{ content:'🔒'; position:absolute; inset:0; display:grid; place-items:center; font-size:.8rem }
+
+/* locked panels: blurred teaser + overlay */
+.pro-gate{ position:relative }
+.pro-gate .pro-lock{ display:none }
+.pro-chip{ background:var(--grape) }
+.pro-gate.locked > *:not(h2):not(.pro-lock){ filter:blur(5px); pointer-events:none; user-select:none }
+.pro-gate.locked .pro-lock{ display:grid; place-items:center; position:absolute; inset:0; z-index:5; font-family:var(--display); font-weight:700; font-size:1rem; border-radius:inherit }
+.pro-gate.locked .pro-lock:hover{ background:rgba(255,201,51,.2) }
+
+/* badges */
+.badges{ display:flex; gap:.8rem; flex-wrap:wrap }
+.badge{ display:grid; justify-items:center; gap:.2rem; border:2.5px solid var(--ink); border-radius:var(--r-sm); padding:.7rem .9rem; background:var(--paper); box-shadow:var(--shadow-sm); min-width:86px }
+.badge-icon{ font-size:1.6rem }
+.badge-label{ font-family:var(--mono); font-size:.6rem; text-transform:uppercase; letter-spacing:.08em }
+.badge.not{ opacity:.4; filter:grayscale(1) }
+.badges .whisper{ width:100%; margin-top:.4rem }
+
+/* 30-day month grid */
+.month-grid{ display:grid; grid-template-columns:repeat(10, 1fr); gap:.4rem; margin-top:.8rem }
+.mcell{ aspect-ratio:1; border:2px solid var(--ink); border-radius:6px; background:var(--ink-12) }
+.mcell.lvl1{ background:rgba(255,201,51,.35) }
+.mcell.lvl2{ background:rgba(255,201,51,.8) }
+.mcell.lvl3{ background:var(--mint) }
+.mcell.lvl4{ background:var(--coral) }
+
+/* dusk theme (Pro exclusive) */
+[data-theme="dusk"]{
+  --paper:#232946; --card:#2C3357; --ink:#F5E9CF;
+  --ink-60:rgba(245,233,207,.62); --ink-12:rgba(245,233,207,.14);
+}
+[data-theme="dusk"] body::after{ opacity:.5 }
+[data-theme="dusk"] .ticker{ background:#161A30 }
+[data-theme="dusk"] footer{ background:#161A30; color:#F5E9CF }
+
+/* ═══════════ Reminders Modal Styles ═══════════ */
+.reminder-toggle-row{ margin:1rem 0 }
+.toggle-label{ display:flex; align-items:center; gap:.8rem; cursor:pointer }
+.toggle-label input[type="checkbox"]{ width:22px; height:22px; accent-color:var(--coral) }
+.toggle-text{ font-size:1rem; font-weight:600 }
+
+.reminder-times-section{ margin:1.2rem 0 }
+.time-input-row{ display:flex; gap:.6rem; margin:.6rem 0 }
+#newTimeInput{ flex:1; border:2.5px solid var(--ink); border-radius:10px; padding:.6rem .8rem; background:var(--paper); font-family:var(--body); font-size:.95rem }
+
+.time-list{ display:grid; gap:.5rem; margin-top:.8rem; max-height:180px; overflow-y:auto }
+.time-item{ display:flex; justify-content:space-between; align-items:center; border:2px solid var(--ink); border-radius:8px; padding:.5rem .7rem; background:var(--paper) }
+.time-item span{ font-family:var(--mono); font-size:.9rem }
+.remove-time{ width:32px; height:32px; border:2px solid var(--ink); border-radius:8px; background:var(--coral); color:var(--ink); font-size:1rem; display:grid; place-items:center; cursor:pointer; transition:transform .12s }
+.remove-time:hover{ transform:scale(1.1) }
+
+.reminder-test-row{ margin:1rem 0; padding-top:1rem; border-top:2px dashed var(--ink-12) }
