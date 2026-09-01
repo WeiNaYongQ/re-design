@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#FFF9EC">
+  <title>Loop* — the ADHD-friendly habit tracker</title>
+  <meta name="description" content="Forgiving streaks, visible timers, dopamine on tap. A habit tracker built for brains that zigzag.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300..800&family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/app.css">
+  <link rel="stylesheet" href="css/site.css">
+  <link rel="stylesheet" href="css/theme.css">
+  <link rel="stylesheet" href="css/mobile.css">
+  <link rel="stylesheet" href="css/pro.css">
+  <link rel="stylesheet" href="css/stats.css">
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" href="favicon.ico">
+  <link rel="icon" type="image/svg+xml" href="icons/icon.svg">
+  <script>
+    try{ const t = JSON.parse(localStorage.getItem('loop.state.v1')).theme;
+      if(t === 'night' || t === 'dusk') document.documentElement.setAttribute('data-theme', t); }catch(e){}
+  </script>
+</head>
+<body>
+
+  <!-- ambient floating stickers -->
+  <div class="ambient" aria-hidden="true">
+    <svg class="sticker st1" width="62" height="62" viewBox="0 0 64 64"><path d="M32 4l7 17 18 2-13.5 12 4 18L32 44l-15.5 9 4-18L7 23l18-2z" fill="#FFC933" stroke="#272130" stroke-width="3" stroke-linejoin="round"/></svg>
+    <svg class="sticker st2" width="48" height="66" viewBox="0 0 48 66"><path d="M30 2 L6 36 h14 l-6 26 26-36 h-15 z" fill="#4FA6FF" stroke="#272130" stroke-width="3" stroke-linejoin="round"/></svg>
+    <svg class="sticker st3" width="96" height="34" viewBox="0 0 96 34"><path d="M4 20 q10 -18 22 0 t22 0 t22 0 t22 0" fill="none" stroke="#FF6157" stroke-width="6" stroke-linecap="round"/></svg>
+    <svg class="sticker st4" width="56" height="56" viewBox="0 0 64 64"><circle cx="32" cy="32" r="27" fill="#1FBE9C" stroke="#272130" stroke-width="3"/><circle cx="23" cy="27" r="3.5" fill="#272130"/><circle cx="41" cy="27" r="3.5" fill="#272130"/><path d="M21 39 q11 10 22 0" fill="none" stroke="#272130" stroke-width="3.5" stroke-linecap="round"/></svg>
+    <svg class="sticker st5" width="52" height="50" viewBox="0 0 64 60"><path d="M32 54 C 6 36 8 12 24 10 c6 -1 8 4 8 4 s2 -5 8 -4 c16 2 18 26 -8 44z" fill="#FF8FC0" stroke="#272130" stroke-width="3" stroke-linejoin="round"/></svg>
+    <div class="big-ring r-a"></div>
+    <div class="big-ring r-b"></div>
+  </div>
+
+  <!-- affirmations ticker -->
+  <div class="ticker" aria-hidden="true">
+    <div class="ticker-track">
+      <div class="half"><i>done beats perfect</i><b>✦</b><i>tiny counts</i><b>✦</b><i>progress, not streaks</i><b>✦</b><i>brains welcome</i><b>✦</b><i>no shame zone</i><b>✦</b><i>dopamine on tap</i><b>✦</b></div>
+      <div class="half"><i>done beats perfect</i><b>✦</b><i>tiny counts</i><b>✦</b><i>progress, not streaks</i><b>✦</b><i>brains welcome</i><b>✦</b><i>no shame zone</i><b>✦</b><i>dopamine on tap</i><b>✦</b></div>
+    </div>
+  </div>
+
+  <header class="topbar">
+    <div class="container">
+      <a class="logo" href="#app">Loop<span class="spark">*</span> <span class="pill">beta v0.5</span></a>
+      <nav class="topnav">
+        <a href="#app">Board</a>
+        <a href="#focus">Focus</a>
+        <a href="stats.html">Stats</a>
+        <a href="#why">Why Loop</a>
+      </nav>
+        <button id="installBtn" class="icon-btn" hidden title="install Loop on this device">📲</button>
+        <button id="proBtn" class="pro-btn" data-open-pro title="Loop Pro — $5 once">🔒 Pro</button>
+        <button id="calmBtn" class="icon-btn" aria-pressed="false" title="calm mode — hides motion & decorations">🌿</button>
+        <button id="themeBtn" class="icon-btn" title="switch day / night">🌙</button>
+        <button id="soundBtn" class="icon-btn" aria-pressed="true" title="toggle sounds">🔊</button>
+        <button id="reminderBtn" class="icon-btn" aria-pressed="false" title="set reminders">🔔</button>
+    </div>
+  </header>
+
+  <main>
+    <!-- ══════════ THE APP ══════════ -->
+    <section class="container app-grid" id="app">
+
+      <section class="panel today">
+        <div class="today-head">
+          <div>
+            <h1>Today</h1>
+            <p class="today-date" id="todayDate"></p>
+          </div>
+          <div class="ring-wrap" title="today's progress">
+            <svg class="ring" viewBox="0 0 76 76">
+              <circle class="bg" cx="38" cy="38" r="30"/>
+              <circle class="fg" id="ringFg" cx="38" cy="38" r="30"/>
+            </svg>
+            <span class="ring-label" id="ringLabel">0/0</span>
+          </div>
+        </div>
+
+        <div class="battery">
+          <span class="battery-label">⚡ Energy check-in</span>
+          <div class="battery-cells" id="batteryCells">
+            <button class="bcell" aria-label="energy 1 of 5"></button>
+            <button class="bcell" aria-label="energy 2 of 5"></button>
+            <button class="bcell" aria-label="energy 3 of 5"></button>
+            <button class="bcell" aria-label="energy 4 of 5"></button>
+            <button class="bcell" aria-label="energy 5 of 5"></button>
+          </div>
+          <span class="battery-note" id="batteryNote"></span>
+        </div>
+
+        <ul class="habit-list" id="habitList"></ul>
+        <button id="addBtn" class="add-row">+ add a tiny habit</button>
+        <button id="archiveBtn" class="archive-toggle" hidden>🗄 archive (0)</button>
+        <div class="brain-dump">
+          <label for="brainDump" class="bd-label">🧠 clear the RAM (brain dump)</label>
+          <textarea id="brainDump" rows="3" placeholder="intrusive thoughts, to-dos, random ideas... they're safe here."></textarea>
+        </div>
+        <div id="archiveTray" class="archive-tray" hidden></div>
+        <div id="doneBanner" class="done-banner" hidden></div>
+      </section>
+
+      <aside class="side">
+
+        <section class="panel spotlight">
+          <h2>🎯 Just one thing <span class="chip">anti-overwhelm</span></h2>
+          <div class="spot-card" id="spotCard"></div>
+          <div class="spot-actions">
+            <button class="btn btn-primary" id="spotDone">Done ✓</button>
+            <button class="btn" id="spotShuffle">Shuffle 🔀</button>
+          </div>
+        </section>
+
+        <section class="panel timer" id="focus">
+          <h2>⏳ Focus timer <span class="chip">time blindness fix</span></h2>
+          <div class="timer-body">
+            <div class="timer-ring-wrap">
+              <svg class="timer-ring" viewBox="0 0 120 120">
+                <circle class="bg" cx="60" cy="60" r="54"/>
+                <circle class="fg" id="tRing" cx="60" cy="60" r="54"/>
+              </svg>
+              <span class="timer-digits" id="tDigits">15:00</span>
+            </div>
+            <div class="timer-presets">
+              <button class="preset" data-min="10">10 min</button>
+              <button class="preset active" data-min="15">15 min</button>
+              <button class="preset" data-min="25">25 min</button>
+            </div>
+            <div class="timer-controls">
+              <button class="btn btn-primary" id="tStart">Start</button>
+              <button class="btn" id="tReset">Reset</button>
+            </div>
+            <p class="whisper" id="tWhisper">press start when you're-ish ready</p>
+          </div>
+        </section>
+
+        <section class="panel week">
+          <h2>🗓️ Last 7 days</h2>
+          <div class="heat" id="heat"></div>
+          <a class="btn mini report-btn" href="stats.html">📊 weekly report</a>
+        </section>
+
+      </aside>
+    </section>
+
+    <!-- ══════════ WHY LOOP ══════════ -->
+    <section id="why" class="rules">
+      <div class="container">
+        <span class="kicker reveal">the loop method</span>
+        <h2 class="section-title reveal">House rules for brains that
+          <span class="u">zigzag<svg viewBox="0 0 120 10" preserveAspectRatio="none" aria-hidden="true"><path d="M2 7 q10 -8 20 0 t20 0 t20 0 t20 0 t20 0" fill="none" stroke="#FF6157" stroke-width="4" stroke-linecap="round"/></svg></span>
+        </h2>
+
+        <div class="rule reveal" style="--acc:var(--coral)">
+          <span class="rule-num">01</span>
+          <div><h3>Streaks that forgive</h3><p>Missed a day? One built-in grace day keeps your flame alive. Momentum over perfection, always — shame is not a retention strategy.</p></div>
+          <span class="rule-tag">#no-shame</span>
+        </div>
+        <div class="rule reveal" style="--acc:var(--sun)">
+          <span class="rule-num">02</span>
+          <div><h3>Make it stupidly small</h3><p>"Open the notebook" counts. Habits here are sized for low-spoon days, because the bar you clear is the bar that works.</p></div>
+          <span class="rule-tag">#tiny-wins</span>
+        </div>
+        <div class="rule reveal" style="--acc:var(--mint)">
+          <span class="rule-num">03</span>
+          <div><h3>Dopamine on tap</h3><p>Confetti, chimes, streak flames, satisfying pops. Instant feedback isn't decoration — for an ADHD brain it's the medicine.</p></div>
+          <span class="rule-tag">#rewards</span>
+        </div>
+        <div class="rule reveal" style="--acc:var(--sky)">
+          <span class="rule-num">04</span>
+          <div><h3>Time you can actually see</h3><p>Ring timers turn invisible minutes into a shape your brain can hold. Short sprints beat vague "I'll do it later" every time.</p></div>
+          <span class="rule-tag">#time-blindness</span>
+        </div>
+        <div class="rule reveal" style="--acc:var(--grape)">
+          <span class="rule-num">05</span>
+          <div><h3>Your data never leaves</h3><p>Everything lives in your browser via localStorage. No account, no cloud, no guilt-trip push notifications at 9pm.</p></div>
+          <span class="rule-tag">#local-first</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════ CTA ══════════ -->
+    <section class="cta">
+      <span class="deco d1" aria-hidden="true">✦</span>
+      <span class="deco d2" aria-hidden="true">✓</span>
+      <span class="deco d3" aria-hidden="true">⚡</span>
+      <div class="container">
+        <h2 class="reveal">Enough reading.<br>Go check one box.</h2>
+        <button class="btn reveal" id="ctaBtn">↑ open my board</button>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      <div class="foot-logo display">Loop<span class="spark">*</span></div>
+      <p class="fine">habit tracking for zigzag brains · a bad day never deletes your progress</p>
+      <p class="fine">v0.5 · core loop · sounds optional, confetti mandatory</p>
+    </div>
+    <div class="data-bar">
+      <button class="btn mini" id="exportBtn">⬇ save backup</button>
+      <button class="btn mini" id="importBtn">⬆ restore backup</button>
+      <button class="btn mini" id="csvBtn">📤 CSV</button>
+      <input type="file" id="importFile" accept=".json,application/json" hidden>
+      <button class="btn mini danger" id="wipeBtn">start fresh</button>
+    </div>
+  </footer>
+
+  <!-- habit composer -->
+  <dialog id="composer">
+    <form id="habitForm">
+      <h3>New tiny habit ✨</h3>
+      <p class="hint">Make it stupidly small. "Open the notebook" counts.</p>
+
+      <label class="field-label" for="hName">name it</label>
+      <input id="hName" maxlength="40" placeholder="e.g. one glass of water" autocomplete="off">
+
+      <span class="field-label">pick an emoji</span>
+      <div class="pick-row" id="emojiRow"></div>
+
+      <span class="field-label">pick a color</span>
+      <div class="pick-row" id="colorRow"></div>
+
+      <label class="field-label" for="hFreq">how often</label>
+      <select id="hFreq">
+        <option value="daily">Every day</option>
+        <option value="weekdays">Weekdays only</option>
+        <option value="3x">3× a week (flexible)</option>
+      </select>
+
+      <label class="field-label" for="hNote">why it matters (optional)</label>
+      <textarea id="hNote" rows="2" maxlength="120" placeholder="future me will feel calmer"></textarea>
+      <menu>
+        <button type="button" class="btn" id="cancelBtn">cancel</button>
+        <button type="submit" class="btn btn-primary">add it ✓</button>
+      </menu>
+    </form>
+  </dialog>
+
+  <div id="confettiLayer" aria-hidden="true"></div>
+
+  <!-- Pro Modal -->
+  <dialog id="proModal">
+    <h3>Loop Pro <span class="pro-price">$5 once</span></h3>
+    <p class="hint">pay once, forever yours — and it keeps the free version free.</p>
+    <ul class="pro-list">
+      <li>🏆 milestone badges — every streak you've ever survived</li>
+      <li>📅 month view — 30 days of your zigzag at a glance</li>
+      <li>🌆 dusk theme — a third way to see Loop</li>
+      <li>📤 CSV export — your data, spreadsheet-ready</li>
+      <li>💛 funds more ADHD-first features</li>
+    </ul>
+    <a class="btn btn-primary" id="buyLink" href="#" target="_blank" rel="noopener">get my key →</a>
+    <label class="field-label" for="proKey">already have a key?</label>
+    <div class="pro-key-row">
+      <input id="proKey" placeholder="paste the key from your receipt" autocomplete="off">
+      <button class="btn btn-primary" id="activateBtn">unlock</button>
+    </div>
+    <p class="pro-note" id="proNote"></p>
+    <span class="field-label">themes</span>
+    <div class="pick-row">
+      <button class="theme-dot" data-theme="day" style="background:#FFF9EC" title="day"></button>
+      <button class="theme-dot" data-theme="night" style="background:#17141F" title="night"></button>
+      <button class="theme-dot pro-only" data-theme="dusk" style="background:#232946" title="dusk (Pro)"></button>
+    </div>
+    <menu><button type="button" class="btn" id="proClose">close</button></menu>
+  </dialog>
+
+  <!-- Reminder Modal -->
+  <dialog id="reminderModal">
+    <h3>🔔 Reminders</h3>
+    <p class="hint">Get notified to check your habits at specific times.</p>
+    
+    <div class="reminder-toggle-row">
+      <label class="toggle-label">
+        <input type="checkbox" id="reminderEnabled">
+        <span class="toggle-text">Enable reminders</span>
+      </label>
+    </div>
+    
+    <div class="reminder-times-section">
+      <label class="field-label" for="reminderTimes">Reminder times</label>
+      <p class="hint">Add times when you want to be reminded (24-hour format)</p>
+      <div class="time-input-row">
+        <input type="time" id="newTimeInput" step="300">
+        <button class="btn btn-primary" id="addTimeBtn">+ Add</button>
+      </div>
+      <div class="time-list" id="timeList"></div>
+    </div>
+    
+    <div class="reminder-test-row">
+      <button class="btn" id="testNotifBtn">🧪 Test notification</button>
+    </div>
+    
+    <menu><button type="button" class="btn" id="reminderClose">close</button></menu>
+  </dialog>
+
+  <!-- order matters: fx.js before extras.js and app.js -->
+  <script src="js/storage.js"></script>
+  <script src="js/habits.js"></script>
+  <script src="js/fx.js"></script>
+  <script src="js/timer.js"></script>
+  <script src="js/extras.js"></script>
+  <script src="js/app.js"></script>
+  <script src="js/settings.js"></script>   <!-- after app.js — order matters -->
+  <script src="js/pro.js"></script>   <!-- after settings.js -->
+  <script src="js/reminders.js"></script>   <!-- reminders system -->
+  <script src="js/reminder-ui.js"></script>   <!-- reminder modal UI -->
+  <script src="js/pwa.js"></script>
+</body>
+</html>

@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Loop* — the receipts</title>
+  <script>
+    try{ const t = JSON.parse(localStorage.getItem('loop.state.v1')).theme;
+      if(t === 'night' || t === 'dusk') document.documentElement.setAttribute('data-theme', t); }catch(e){}
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300..800&family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/app.css">
+  <link rel="stylesheet" href="css/theme.css">
+  <link rel="stylesheet" href="css/mobile.css">
+  <link rel="stylesheet" href="css/pro.css">
+  <link rel="stylesheet" href="css/stats.css">
+  <link rel="icon" href="../favicon.ico">
+  <link rel="icon" type="image/svg+xml" href="../icons/icon.svg">
+</head>
+<body>
+
+  <div class="ambient" aria-hidden="true">
+    <svg class="sticker st1" width="62" height="62" viewBox="0 0 64 64"><path d="M32 4l7 17 18 2-13.5 12 4 18L32 44l-15.5 9 4-18L7 23l18-2z" fill="#FFC933" stroke="#272130" stroke-width="3" stroke-linejoin="round"/></svg>
+    <svg class="sticker st4" width="56" height="56" viewBox="0 0 64 64"><circle cx="32" cy="32" r="27" fill="#1FBE9C" stroke="#272130" stroke-width="3"/><circle cx="23" cy="27" r="3.5" fill="#272130"/><circle cx="41" cy="27" r="3.5" fill="#272130"/><path d="M21 39 q11 10 22 0" fill="none" stroke="#272130" stroke-width="3.5" stroke-linecap="round"/></svg>
+  </div>
+
+  <div class="ticker" aria-hidden="true">
+    <div class="ticker-track">
+      <div class="half"><i>done beats perfect</i><b>✦</b><i>tiny counts</i><b>✦</b><i>progress, not streaks</i><b>✦</b><i>brains welcome</i><b>✦</b><i>no shame zone</i><b>✦</b><i>dopamine on tap</i><b>✦</b></div>
+      <div class="half"><i>done beats perfect</i><b>✦</b><i>tiny counts</i><b>✦</b><i>progress, not streaks</i><b>✦</b><i>brains welcome</i><b>✦</b><i>no shame zone</i><b>✦</b><i>dopamine on tap</i><b>✦</b></div>
+    </div>
+  </div>
+
+  <header class="topbar">
+    <div class="container">
+      <a class="logo" href="index.html">Loop<span class="spark">*</span> <span class="pill">beta v0.5</span></a>
+      <nav class="topnav">
+        <a href="index.html">Board</a>
+        <a href="stats.html" class="active">Stats</a>
+      </nav>
+      <button id="proBtn" class="pro-btn" data-open-pro title="Loop Pro — $5 once">🔒 Pro</button>
+      <button id="calmBtn" class="icon-btn" aria-pressed="false" title="calm mode">🌿</button>
+      <button id="themeBtn" class="icon-btn" title="switch day / night">🌙</button>
+      <button id="soundBtn" class="icon-btn" aria-pressed="true" title="toggle sounds">🔊</button>
+    </div>
+  </header>
+
+  <main class="container stats-main">
+
+    <header class="stats-head">
+      <div>
+        <span class="kicker">your analytics</span>
+        <h1>The Receipts 🧾</h1>
+      </div>
+      <span class="range" id="range"></span>
+    </header>
+
+    <section class="panel">
+      <div class="report-grid">
+        <div class="big-ring-wrap" title="week completion">
+          <svg class="big-ring" viewBox="0 0 200 200">
+            <circle class="bg" cx="100" cy="100" r="84"/>
+            <circle class="fg" id="bigRing" cx="100" cy="100" r="84"/>
+          </svg>
+          <div class="big-label"><span id="bigPct">0%</span></div>
+        </div>
+        <div class="stat-boxes">
+          <div class="stat-box"><div class="stat-value" id="vChecks">0</div><div class="stat-label">checks this week</div></div>
+          <div class="stat-box"><div class="stat-value" id="vStreak">0</div><div class="stat-label">best streak</div></div>
+          <div class="stat-box"><div class="stat-value" id="vDay">—</div><div class="stat-label">best day</div></div>
+        </div>
+      </div>
+
+      <div class="bars" id="bars"></div>
+      <p class="quote-line" id="quoteLine"></p>
+
+      <div class="report-actions">
+        <button class="btn btn-primary" id="dlBtn">⬇ download as image</button>
+        <span class="share-hint">optional — for posting. "built for my ADHD brain" is the whole marketing plan.</span>
+      </div>
+    </section>
+
+    <section class="panel">
+      <h2>🏆 Habit leaderboard <span class="chip">this week</span></h2>
+      <div id="lb"></div>
+    </section>
+
+    <section class="panel">
+      <h2>♾️ All-time</h2>
+      <div class="tiles">
+        <div class="tile"><div class="stat-value" id="tChecks">0</div><div class="stat-label">total checks</div></div>
+        <div class="tile"><div class="stat-value" id="tStreak">0</div><div class="stat-label">longest streak</div></div>
+        <div class="tile"><div class="stat-value" id="tPerfect">0</div><div class="stat-label">perfect days</div></div>
+        <div class="tile"><div class="stat-value" id="tHabits">0</div><div class="stat-label">active habits</div></div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <div class="container">
+      <div class="foot-logo display">Loop<span class="spark">*</span></div>
+      <p class="fine">the receipts page · your data still never leaves this browser</p>
+      <div class="data-bar">
+        <button class="btn mini" id="exportBtn">⬇ save backup</button>
+        <button class="btn mini" id="importBtn">⬆ restore backup</button>
+        <input type="file" id="importFile" accept=".json,application/json" hidden>
+        <button class="btn mini" id="csvBtn">📤 CSV</button>
+        <button class="btn mini danger" id="wipeBtn">start fresh</button>
+      </div>
+    </div>
+  </footer>
+
+  <dialog id="proModal">
+    <h3>Loop Pro <span class="pro-price">$5 once</span></h3>
+    <p class="hint">pay once, forever yours — and it keeps the free version free.</p>
+    <ul class="pro-list">
+      <li>🏆 milestone badges — every streak you've ever survived</li>
+      <li>📅 month view — 30 days of your zigzag at a glance</li>
+      <li>🌆 dusk theme — a third way to see Loop</li>
+      <li>📤 CSV export — your data, spreadsheet-ready</li>
+      <li>💛 funds more ADHD-first features</li>
+    </ul>
+    <a class="btn btn-primary" id="buyLink" href="#" target="_blank" rel="noopener">get my key →</a>
+    <label class="field-label" for="proKey">already have a key?</label>
+    <div class="pro-key-row">
+      <input id="proKey" placeholder="paste the key from your receipt" autocomplete="off">
+      <button class="btn btn-primary" id="activateBtn">unlock</button>
+    </div>
+    <p class="pro-note" id="proNote"></p>
+    <span class="field-label">themes</span>
+    <div class="pick-row">
+      <button class="theme-dot" data-theme="day" style="background:#FFF9EC" title="day"></button>
+      <button class="theme-dot" data-theme="night" style="background:#17141F" title="night"></button>
+      <button class="theme-dot pro-only" data-theme="dusk" style="background:#232946" title="dusk (Pro)"></button>
+    </div>
+    <menu><button type="button" class="btn" id="proClose">close</button></menu>
+  </dialog>
+  
+  <script src="js/storage.js"></script>
+  <script src="js/habits.js"></script>
+  <script src="js/fx.js"></script>
+  <script src="js/report.js"></script>
+  <script src="js/stats.js"></script>
+  <script src="js/settings.js"></script>
+  <script src="js/pro.js"></script>
+  <script src="js/pwa.js"></script>
+</body>
+</html>

@@ -1,0 +1,14 @@
+{
+  "name": "Loop* — habit tracker for zigzag brains",
+  "short_name": "Loop",
+  "description": "Forgiving streaks, visible timers, dopamine on tap.",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#FFF9EC",
+  "theme_color": "#FFF9EC",
+  "icons": [
+    { "src": "icons/icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" },
+    { "src": "icons/icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "maskable" }
+  ]
+}
